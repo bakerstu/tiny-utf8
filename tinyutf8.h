@@ -1007,7 +1007,7 @@ public:
 	value_type raw_at( size_type byte_index ) const {
 		size_type size = this->size();
 		if( byte_index >= size )
-			HASSERT(0);
+			DIE( "utf8_string::(raw_)at" );
 		const char* pos = get_buffer() + byte_index;
 		return *pos ? decode_utf8( pos , utf8_string::get_codepoint_bytes( *pos , size - byte_index ) ) : 0;
 	}
@@ -2870,7 +2870,7 @@ utf8_string utf8_string::raw_substr( size_type index , size_type byte_count ) co
 	// Bound checks...
 	size_type data_len = size();
 	if( index > data_len )
-		HASSERT(0);
+		DIE( "utf8_string::(raw_)substr" );
 	size_type		end_index = index + byte_count;
 	if( end_index > data_len || end_index < index ){ // 'end_index < index' is needed because of potential integer overflow in sum
 		end_index = data_len;
@@ -3267,7 +3267,7 @@ utf8_string& utf8_string::raw_insert( size_type index , const utf8_string& str )
 	// Bound checks...
 	size_type old_data_len = size();
 	if( index > old_data_len )
-		HASSERT(0);
+		DIE( "utf8_string::(raw_)insert" );
 	
 	// Compute the updated metrics
 	size_type str_data_len	= str.size();
@@ -3623,7 +3623,7 @@ utf8_string& utf8_string::raw_replace( size_type index , size_type replaced_len 
 	// Bound checks...
 	size_type old_data_len = size();
 	if( index > old_data_len )
-		HASSERT(0);
+		DIE( "utf8_string::(raw_)replace" );
 	size_type end_index = index + replaced_len;
 	if( end_index > old_data_len || end_index < index ){ // 'end_index < index' is needed because of potential integer overflow in sum
 		end_index = old_data_len;
@@ -4033,7 +4033,7 @@ utf8_string& utf8_string::raw_erase( size_type index , size_type len )
 	// Bound checks...
 	size_type old_data_len = size();
 	if( index > old_data_len )
-		HASSERT(0);
+		DIE( "utf8_string::(raw_)erase" );
 	if( !len )
 		return *this;
 	size_type		end_index = index + len;
